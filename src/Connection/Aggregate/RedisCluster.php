@@ -53,7 +53,7 @@ class RedisCluster implements ClusterInterface, \IteratorAggregate, \Countable
     private $slotsMap;
     private $strategy;
     private $connections;
-    private $retryLimit = 5;
+    private $retryLimit = 0;
 
     /**
      * @param FactoryInterface  $connections Optional connection factory.
@@ -544,27 +544,12 @@ class RedisCluster implements ClusterInterface, \IteratorAggregate, \Countable
      */
     private function retryCommandOnFailure(CommandInterface $command, $method)
     {
-        $failure = false;
-
-        RETRY_COMMAND: {
-            try {
-                $response = $this->getConnection($command)->$method($command);
-            } catch (ConnectionException $exception) {
-                $connection = $exception->getConnection();
-                $connection->disconnect();
-
-                //$this->remove($connection);
-
-                if ($failure) {
-                    throw $exception;
-                } elseif ($this->useClusterSlots) {
-                    $this->askSlotsMap();
-                }
-
-                $failure = true;
-
-                goto RETRY_COMMAND;
-            }
+        try {
+            $response = $this->getConnection($command)->$method($command);
+        } catch (ConnectionException $exception) {
+            $connection = $exception->getConnection();
+            $connection->disconnect();
+            throw $exception;
         }
 
         return $response;
