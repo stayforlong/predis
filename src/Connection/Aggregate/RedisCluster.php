@@ -219,7 +219,7 @@ class RedisCluster implements ClusterInterface, \IteratorAggregate, \Countable
                 $connection = $exception->getConnection();
                 $connection->disconnect();
 
-                $this->remove($connection);
+                //$this->remove($connection);
 
                 if ($retries === $this->retryLimit) {
                     throw $exception;
@@ -553,7 +553,7 @@ class RedisCluster implements ClusterInterface, \IteratorAggregate, \Countable
                 $connection = $exception->getConnection();
                 $connection->disconnect();
 
-                $this->remove($connection);
+                //$this->remove($connection);
 
                 if ($failure) {
                     throw $exception;
