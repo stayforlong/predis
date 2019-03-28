@@ -27,5 +27,8 @@
     },
     "autoload": {
         "psr-4": {"Predis\\": "src/"}
-    }
+    },
+    "replace": {
+        "predis/predis": "self.version"
+     }
 }
