@@ -1,5 +1,5 @@
 {
-    "name": "jan-carreras/predis",
+    "name": "stayforlong/predis",
     "type": "library",
     "description": "Flexible and feature-complete Redis client for PHP and HHVM",
     "keywords": ["nosql", "redis", "predis"],
